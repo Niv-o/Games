@@ -22,6 +22,8 @@ cv.width = W; cv.height = H;
 
 // ── Audio ─────────────────────────────────────────────────
 const AC = new (window.AudioContext || window.webkitAudioContext)();
+const hitSound = new Audio('WhatsApp%20Audio%202026-03-11%20at%2020.03.10.mp4');
+hitSound.volume = 1.0;
 
 function tone(freq, type, dur, vol, endFreq) {
   const o = AC.createOscillator(), g = AC.createGain();
@@ -54,7 +56,7 @@ function sfx(name) {
     if (name === 'pShoot') { tone(860, 'sine', 0.10, 0.22, 190); }
     if (name === 'eShoot') { tone(320, 'sawtooth', 0.15, 0.18, 75); }
     if (name === 'eHit')   { burst(0.07, 0.35); tone(180, 'sine', 0.09, 0.18, 45); }
-    if (name === 'pHit')   { tone(140, 'sine', 0.38, 0.38, 38); burst(0.04, 0.28); }
+    if (name === 'pHit')   { hitSound.currentTime = 0; hitSound.play().catch(()=>{}); }
     if (name === 'waveClear') {
       [[0,440],[120,554],[240,659],[380,880]].forEach(([ms,f]) =>
         setTimeout(() => tone(f,'sine',0.16,0.22), ms));
