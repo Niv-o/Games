@@ -134,8 +134,13 @@ function makeWave() {
 
 // ── Input ─────────────────────────────────────────────────
 const K = {};
+let audioUnlocked = false;
 addEventListener('keydown', e => {
   K[e.code] = true;
+  if (!audioUnlocked) {
+    hitSound.play().then(() => { hitSound.pause(); hitSound.currentTime = 0; }).catch(()=>{});
+    audioUnlocked = true;
+  }
   if (e.code === 'Space' || e.code === 'Enter') {
     AC.resume();
     if (phase === 'MENU') { wave = 1; makeWave(); pb = []; eb = []; phase = 'PLAY'; }
